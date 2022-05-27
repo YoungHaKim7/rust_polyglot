@@ -1,6 +1,6 @@
-enum Node<'a> {
+enum Node {
     Empty,
-    NonEmpty(u32, &'a Node<'a>),
+    NonEmpty(u32, &'static Node),
 }
 
 #[cfg(test)]
