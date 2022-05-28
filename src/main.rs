@@ -10,6 +10,10 @@ struct Elf {
     name: String,
 }
 
+struct HalfElf {
+    name: String,
+}
+
 struct HalfOrc {
     name: String,
 }
@@ -43,6 +47,23 @@ pub trait Constitution {
     }
 }
 
+pub trait Elvish {}
+
+impl Elvish for Elf {}
+impl Elvish for HalfElf {}
+impl Elvish for HalfOrc {}
+
+// Let's make a function for speaking Elvish
+// Accept a generic type "T" (character: T)
+// Only implement the Elvish Trait<T: Elvish>
+pub fn speak_elvish<T: Elvish>(character: T) -> String {
+    String::from("yes")
+}
+
+pub fn no_speak_elvish<T: Elvish>(character: T) -> String {
+    String::from("no")
+}
+
 fn main() {
     let my_dwarf = Dwarf {
         name: String::from("NellDwarf"),
@@ -60,6 +81,10 @@ fn main() {
         name: String::from("Nell"),
     };
 
+    let my_half_elf = HalfElf {
+        name: String::from("NellElf"),
+    };
+
     // Return 2
     my_dwarf.constitution_bonus();
 
@@ -69,4 +94,13 @@ fn main() {
     // Return 0(default)
     my_elf.constitution_bonus();
     my_human.constitution_bonus();
+
+    // Return "yes"
+    speak_elvish(my_elf);
+
+    // Return "yes"
+    speak_elvish(my_half_elf);
+
+    // Return "no"
+    no_speak_elvish(my_half_orc);
 }
