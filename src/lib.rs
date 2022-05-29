@@ -6,24 +6,27 @@ impl<'a, T> Iterator for MyIterator<'a, T> {
     type Item = &'a T;
 
     fn next(&mut self) -> Option<Self::Item> {
-        let (element, rest) = self.slice.split_first()?;
-        self.slice = rest;
-        Some(element)
+        // let (element, rest) = self.slice.split_first()?;
+        // self.slice = rest;
+        // Some(element)
+
+        let element = self.slice.get(0);
+        self.slice = &self.slice[1..];
     }
 }
 
-struct MyMutableIterator<'a, T> {
-    slice: &'a mut [T],
+struct MyMutableIterator<'iter, T> {
+    slice: &'iter mut [T],
 }
 
-impl<'a, T> Iterator for MyMutableIterator<'a, T> {
-    type Item = &'a mut T;
+impl<'iter, T> Iterator for MyMutableIterator<'iter, T> {
+    type Item = &'iter mut T;
 
-    fn next(&mut self) -> Option<Self::Item> {
+    fn next<'next>(&'next mut self) -> Option<Self::Item> {
         // get first element
         let element = self.slice.get_mut(0);
         // set self.slice to the rest of the list
-        self.slice = &mut self.slice[1..];
+        // self.slice = &mut self.slice[1..];
         // return first element
         element
     }
