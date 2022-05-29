@@ -6,9 +6,7 @@ impl<'a, T> Iterator for MyIterWrapper<'a, T> {
     type Item = &'a T;
 
     fn next(&mut self) -> Option<Self::Item> {
-        if self.slice.is_empty() {
-            return None;
-        }
+        let (element, rest) = self.slice.split_first()?;
         // get the first element
         let element = self.slice.get(0);
         // set self.slice equal to the other elements
