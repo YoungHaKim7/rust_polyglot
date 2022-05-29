@@ -1,8 +1,8 @@
-struct MyIterWrapper<'a, T> {
+struct MyIterator<'a, T> {
     slice: &'a [T],
 }
 
-impl<'a, T> Iterator for MyIterWrapper<'a, T> {
+impl<'a, T> Iterator for MyIterator<'a, T> {
     type Item = &'a T;
 
     fn next(&mut self) -> Option<Self::Item> {
@@ -19,7 +19,7 @@ mod tests {
     #[test]
     fn it_works() {
         let collection = vec![1, 2, 3, 4];
-        let wrapper = MyIterWrapper {
+        let wrapper = MyIterator {
             slice: &collection[..],
         };
 
