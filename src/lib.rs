@@ -6,13 +6,13 @@ impl<'a, T> Iterator for MyIterator<'a, T> {
     type Item = &'a T;
 
     fn next<'next>(&'next mut self) -> Option<Self::Item> {
-        // let (element, rest) = self.slice.split_first()?;
-        // self.slice = rest;
-        // Some(element)
+        let (element, rest) = self.slice.split_first()?;
+        self.slice = rest;
+        Some(element)
 
-        let element = self.slice.get(0);
-        self.slice = &self.slice[1..];
-        element
+        // let element = self.slice.get(0);
+        // self.slice = &self.slice[1..];
+        // element
     }
 }
 
@@ -24,9 +24,9 @@ impl<'iter, T> Iterator for MyMutableIterator<'iter, T> {
     type Item = &'iter mut T;
 
     fn next<'next>(&'next mut self) -> Option<Self::Item> {
-        let slice = &mut self.slice;
-        let slice = std::mem::replace(slice, &mut []);
-        let (first, rest) = slice.split_first_mut()?;
+        let slice1 = &mut self.slice;
+        let slice2 = std::mem::replace(slice1, &mut []);
+        let (first, rest) = slice2.split_first_mut()?;
         self.slice = rest;
         Some(first)
 
@@ -56,7 +56,7 @@ mod tests {
 
         let mut collection = vec![1, 2, 3, 4];
         let wrapper = MyMutableIterator {
-            slice: &mut &collection[..],
+            slice: &mut collection[..],
         };
 
         for (index, elem) in wrapper.enumerate() {
