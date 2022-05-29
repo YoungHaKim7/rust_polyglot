@@ -30,7 +30,7 @@ mod tests {
         };
 
         for (index, elem) in wrapper.enumerate() {
-            assert_eq!(elem, &collection[index]);
+            assert_eq!(*elem, collection[index]);
         }
     }
 }
