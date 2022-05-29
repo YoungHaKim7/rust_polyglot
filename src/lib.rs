@@ -5,7 +5,7 @@ struct MyIterator<'a, T> {
 impl<'a, T> Iterator for MyIterator<'a, T> {
     type Item = &'a T;
 
-    fn next(&mut self) -> Option<Self::Item> {
+    fn next<'next>(&'next mut self) -> Option<Self::Item> {
         // let (element, rest) = self.slice.split_first()?;
         // self.slice = rest;
         // Some(element)
@@ -24,12 +24,18 @@ impl<'iter, T> Iterator for MyMutableIterator<'iter, T> {
     type Item = &'iter mut T;
 
     fn next<'next>(&'next mut self) -> Option<Self::Item> {
-        // get first element
-        let element = self.slice.get_mut(0);
-        // set self.slice to the rest of the list
-        // self.slice = &mut self.slice[1..];
-        // return first element
-        element
+        let slice = &mut self.slice;
+        let slice = std::mem::replace(slice, &mut []);
+        let (first, rest) = slice.split_first_mut()?;
+        self.slice = rest;
+        Some(first)
+
+        // // get first element
+        // let element = self.slice.get_mut(0);
+        // // set self.slice to the rest of the list
+        // // self.slice = &mut self.slice[1..];
+        // // return first element
+        // element
     }
 }
 
@@ -39,7 +45,7 @@ mod tests {
 
     #[test]
     fn it_works() {
-        let collection = vec![1, 2, 3, 4];
+        let mut collection = vec![1, 2, 3, 4];
         let wrapper = MyIterator {
             slice: &collection[..],
         };
@@ -48,7 +54,7 @@ mod tests {
             assert_eq!(*elem, collection[index]);
         }
 
-        let collection = vec![1, 2, 3, 4];
+        let mut collection = vec![1, 2, 3, 4];
         let wrapper = MyMutableIterator {
             slice: &mut &collection[..],
         };
