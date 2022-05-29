@@ -7,12 +7,8 @@ impl<'a, T> Iterator for MyIterWrapper<'a, T> {
 
     fn next(&mut self) -> Option<Self::Item> {
         let (element, rest) = self.slice.split_first()?;
-        // get the first element
-        let element = self.slice.get(0);
-        // set self.slice equal to the other elements
-        self.slice = &self.slice[1..];
-        // return first element
-        element
+        self.slice = rest;
+        Some(element)
     }
 }
 
