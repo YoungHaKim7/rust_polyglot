@@ -12,6 +12,7 @@ impl<'a, T> Iterator for MyIterator<'a, T> {
 
         let element = self.slice.get(0);
         self.slice = &self.slice[1..];
+        element
     }
 }
 
