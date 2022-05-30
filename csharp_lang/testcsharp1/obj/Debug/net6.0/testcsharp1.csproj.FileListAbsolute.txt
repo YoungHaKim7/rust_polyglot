@@ -1,0 +1,15 @@
+/Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/csharp_lang/testcsharp1/bin/Debug/net6.0/testcsharp1
+/Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/csharp_lang/testcsharp1/bin/Debug/net6.0/testcsharp1.deps.json
+/Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/csharp_lang/testcsharp1/bin/Debug/net6.0/testcsharp1.runtimeconfig.json
+/Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/csharp_lang/testcsharp1/bin/Debug/net6.0/testcsharp1.dll
+/Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/csharp_lang/testcsharp1/bin/Debug/net6.0/ref/testcsharp1.dll
+/Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/csharp_lang/testcsharp1/bin/Debug/net6.0/testcsharp1.pdb
+/Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/csharp_lang/testcsharp1/obj/Debug/net6.0/testcsharp1.csproj.AssemblyReference.cache
+/Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/csharp_lang/testcsharp1/obj/Debug/net6.0/testcsharp1.GeneratedMSBuildEditorConfig.editorconfig
+/Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/csharp_lang/testcsharp1/obj/Debug/net6.0/testcsharp1.AssemblyInfoInputs.cache
+/Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/csharp_lang/testcsharp1/obj/Debug/net6.0/testcsharp1.AssemblyInfo.cs
+/Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/csharp_lang/testcsharp1/obj/Debug/net6.0/testcsharp1.csproj.CoreCompileInputs.cache
+/Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/csharp_lang/testcsharp1/obj/Debug/net6.0/testcsharp1.dll
+/Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/csharp_lang/testcsharp1/obj/Debug/net6.0/ref/testcsharp1.dll
+/Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/csharp_lang/testcsharp1/obj/Debug/net6.0/testcsharp1.pdb
+/Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/csharp_lang/testcsharp1/obj/Debug/net6.0/testcsharp1.genruntimeconfig.cache
