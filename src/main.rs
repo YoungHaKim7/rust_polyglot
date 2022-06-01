@@ -1,32 +1,27 @@
-#[derive(Debug)]
-struct Pair(i32, i32);
+use std::ops::Deref;
 
-trait Coordinate {
-    type A;
-    type B;
+struct MyBox<T>(T);
 
-    fn x(&self) -> i32; 
-    fn y(&self) -> i32; 
+impl<T> MyBox<T> {
+    fn new(x: T) -> MyBox<T> {
+        MyBox(x)
+    }
 }
 
-impl Coordinate for Pair {
-    type A = i32;
-    type B = i32;
+impl<T> Deref for MyBox<T> {
+    type Target = T;
 
-    fn x(&self) -> i32{self.0} 
-    fn y(&self) -> i32{self.1} 
+    fn deref(&self) -> &T {
+        &self.0 // tuple  tuple.0
+    }
+    // *y -> *(y.deref())
 }
-
-fn y_diff<C:Coordinate>(coor_1: &C, coor_2: &C) -> i32 {
-    coor_2.y() - coor_1.y()
+fn hello(name: &str) {
+    println!("Hello, {}! ", name);
 }
-
 
 fn main() {
-    let coor_1 = Pair(1,2);
-    println!("{coor_1:?}");
-    let coor_2 = Pair(3,9);
-
-    println!("{}", y_diff(&coor_1, &coor_2));
+    let m = MyBox::new(String::from("Rust "));
+    hello(&(*m)[..]);
+    // hello(&m);
 }
-    
