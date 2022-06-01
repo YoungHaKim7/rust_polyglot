@@ -1,25 +1,28 @@
-fn three_vowels(word: &str) -> bool {
-    let mut vowel_count = 0;
-    for c in word.chars() {
-        match c {
-            'a' | 'e' | 'i' | 'o' | 'u' => {
-                vowel_count += 1;
-                if vowel_count >= 3 {
-                    return true;
-                }
-            }
-            _ => vowel_count = 0,
-        }
+use std::ops::Deref;
+
+struct MyBox<T>(T);
+
+impl<T> MyBox<T> {
+    fn new(x: T) -> MyBox<T> {
+        MyBox(x)
     }
-    false
+}
+
+impl<T> Deref for MyBox<T> {
+    type Target = T;
+
+    fn deref(&self) -> &T {
+        &self.0  // tuple  tuple.0
+    }
+    // *y -> *(y.deref())
 }
 
 fn main() {
-    let sentence_string =
-        "Once upon a time, there was a friendly curious crab named Ferris".to_string();
-    for word in sentence_string.split(' ') {
-        if three_vowels(word) {
-            println!("{word} has three consecutive vowels");
-        }
-    }
+    let x = 5;
+    let y = MyBox::new(x);
+
+    assert_eq!(5, *y);
 }
+
+
+
