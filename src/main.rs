@@ -1,13 +1,13 @@
-use std::collections::HashMap;
-
-fn main() {
-    let mut book_reviews = HashMap::new();
-
-    book_reviews.insert(
-        "Adventures of Huckleberry Finn".to_string(),
-        "My favorite book".to_string(),
-    );
+fn sum_pos(v: &[i32]) -> i32 {
+    v.iter().filter(|i| **i > 0).map(|i| *i).sum()
 }
 
+fn main() {
+    let i = [0];
+    let v1_iter = sum_pos(&i);
 
+    for val in v1_iter..100 {
+        println!("Got : {:?}", val);
+    }
+}
 
