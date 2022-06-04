@@ -1,10 +1,13 @@
-struct Point {
-    x: i32,
-    y: i32,
-}
+use std::collections::HashMap;
 
 fn main() {
-    let p = Point { x: 1, y: 2 };
-    println!("{} {}", p.x, p.y);
+    let mut m = HashMap::new();
+    m.insert("kr", "Korea");
+    let k = "kr";
+    let o = m.get(&k);
+    m.clear();
+    if let Some(v) = o {
+        println!("{} = {} ", k, *v);
+    }
 }
 
