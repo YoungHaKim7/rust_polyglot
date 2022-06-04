@@ -1,19 +1,10 @@
-fn sum_pos(v: &[i32]) -> i32 {
-    let mut sum = 0;
-    for i in v {
-        if *i > 0 {
-            sum += *i;
-        }
-    }
-    sum
+struct Point {
+    x: i32,
+    y: i32,
 }
 
 fn main() {
-    let i = [0];
-    let v1_iter = sum_pos(&i);
-
-    for val in v1_iter..100 {
-        println!("Got : {:?}", val);
-    }
+    let p = Point { x: 1, y: 2 };
+    println!("{} {}", p.x, p.y);
 }
 
