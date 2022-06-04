@@ -1,5 +1,11 @@
 fn sum_pos(v: &[i32]) -> i32 {
-    v.iter().filter(|i| **i > 0).map(|i| *i).sum()
+    let mut sum = 0;
+    for i in v {
+        if *i > 0 {
+            sum += *i;
+        }
+    }
+    sum
 }
 
 fn main() {
