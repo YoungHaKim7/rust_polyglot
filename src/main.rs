@@ -3,9 +3,9 @@ struct Foo {}
 
 fn floor_divide(num: f32, by: f32) -> Result<i32, String> {
     if by == 0. {
-        return Result::Err("Cannot divide by 0".to_string());
+        return Err("Cannot divide by 0".to_string());
     }
-    return Result::Ok((num / by).floor() as i32);
+    return Ok((num / by).floor() as i32);
 }
 
 fn main() {
@@ -13,6 +13,6 @@ fn main() {
     let foo: Option<Foo> = Option::None;
 
     // 7) Result (v.s Exception)
-    let result = floor_divide(10., 0.);
+    let result = floor_divide(10., 4.);
     println!("result : {:?} ", result)
 }
