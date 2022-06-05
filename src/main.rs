@@ -1,24 +1,29 @@
-#[derive(Debug, Clone, Copy)]
-struct Foo {}
+use std::cmp::{Ord, Ordering};
 
-enum Activity {
-    Sleeping(u8),   // number of hours slept
-    Skiing(String), // ski resort
-    Coding,
+fn compare_item<T: Ord>(item1: &T, item2: &T) -> Ordering {
+    item1.cmp(item2)
+}
+
+struct Container<T: Ord> {
+    item: T,
+}
+
+impl<T: Ord> Container<T> {
+    fn compare_item(&self, other_item: &T) -> Ordering {
+        self.item.cmp(other_item)
+    }
 }
 
 fn main() {
-    // 4) enum & match (enum & Java 1 Switch)
-    let activity_now = Activity::Sleeping(9);
-    let message = match activity_now {
-        Activity::Sleeping(hours) if hours > 8 => format!("Wake up!! {} o'clock", hours),
-        Activity::Sleeping(_) => format!("shit!!"),
-        Activity::Skiing(resort) => format!("Awesome! {}", resort),
-        Activity::Coding => format!("Hopefully in Rust!  "),
-    };
-    println!("The message is : {}", message);
-
     // 5) Generics
+    let c1 = Container { item: 123 };
+    let c2 = Container {
+        item: "Hello".to_string(),
+    };
+
+    println!("compare 1 : {:?}", c1.compare_item(&222));
+    println!("compare 2 : {:?}", c2.compare_item(&"zzzz".to_string()));
+    println!("compare 3 : {:?}", compare_item(&222, &111));
 
     // 6) Option (v.s. null & java. util. Optional)
 
