@@ -3,13 +3,16 @@ import java.util.ArrayList;
 class Start {
     public static void main(String[] args) {
         // 4) enum
-        Activity activity_now = new Sleeping(9);
-        switch (activity_now) {
-            case Sleeping sl -> System.out.println("Wake up!" + sl.hours);
-            case Skiing sk -> System.out.println("Awesome! " + sk.resort);
-            case Coding c -> System.out.println("Hopefully in Java!  ");
-            default -> System.out.println("unknown");
-        }
+        Activity activity_now = new Sleeping(5);
+        var message = switch (activity_now) {
+            case Sleeping sl && sl.hours > 8 -> "Wake up!" + sl.hours;
+            case Sleeping sl -> "shit";
+            case Skiing sk -> "Awesome! " + sk.resort;
+            case Coding c -> "Hopefully in Java!  ";
+            default -> "unknown";
+        };
+
+        System.out.println("The message is : " + message);
 
         // 5) Generics, Option, Result
 
