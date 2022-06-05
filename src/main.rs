@@ -12,6 +12,9 @@ fn main() {
     let tuple1 = Bar(123, true, Foo {});
 
     // 3) Vec ( ~ ArrayList)
+    let mut arr2: Vec<Foo> = Vec::new();
+    arr2.push(Foo {});
+    println!("item Vec__: {:?}", arr2[0]);
 
     // 4) enum & match (enum & Java 1 Switch)
 
