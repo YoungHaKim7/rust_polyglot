@@ -1,22 +1,22 @@
 #[derive(Debug, Clone, Copy)]
 struct Foo {}
 
-// tuple struct
-struct Bar(u64, bool, Foo);
+enum Activity {
+    Sleeping(u8),   // number of hours slept
+    Skiing(String), // ski resort
+    Coding,
+}
 
 fn main() {
-    // 1) Array
-    let arr1: [Foo; 4] = [Foo {}; 4];
-
-    // 2) Tuple (n/a)
-    let tuple1 = Bar(123, true, Foo {});
-
-    // 3) Vec ( ~ ArrayList)
-    let mut arr2: Vec<Foo> = Vec::new();
-    arr2.push(Foo {});
-    println!("item Vec__: {:?}", arr2.get(0));
-
     // 4) enum & match (enum & Java 1 Switch)
+    let activity_now = Activity::Sleeping(9);
+    let message = match activity_now {
+        Activity::Sleeping(hours) if hours > 8 => format!("Wake up!! {} o'clock", hours),
+        Activity::Sleeping(_) => format!("shit!!"),
+        Activity::Skiing(resort) => format!("Awesome! {}", resort),
+        Activity::Coding => format!("Hopefully in Rust!  "),
+    };
+    println!("The message is : {}", message);
 
     // 5) Generics
 

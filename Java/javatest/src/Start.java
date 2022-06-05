@@ -2,24 +2,38 @@ import java.util.ArrayList;
 
 class Start {
     public static void main(String[] args) {
-        // 1) Array
-        Foo[] arr1 = new Foo[10];
-        System.out.println("item: " + arr1[3]);
-
-        // 2) Tuple (n/a)
-        // Not in Lang (org.javatuples, Pair, Triplet, ...)
-
-        // 3) Vec (ArrayList)
-        var arr2 = new ArrayList<Foo>();
-        arr2.add(new Foo());
-        System.out.println("item: " + arr2.get(0));
-
         // 4) enum
+        Activity activity_now = new Sleeping(9);
+        switch (activity_now) {
+            case Sleeping sl -> System.out.println("Wake up!" + sl.hours);
+            case Skiing sk -> System.out.println("Awesome! " + sk.resort);
+            case Coding c -> System.out.println("Hopefully in Java!  ");
+            default -> System.out.println("unknown");
+        }
 
         // 5) Generics, Option, Result
 
     }
 }
 
-class Foo {
+class Activity {
+}
+
+class Sleeping extends Activity {
+    public int hours;
+
+    public Sleeping(int hours) {
+        this.hours = hours;
+    }
+}
+
+class Skiing extends Activity {
+    public String resort;
+
+    Skiing(String resort) {
+        this.resort = resort;
+    }
+}
+
+class Coding extends Activity {
 }
