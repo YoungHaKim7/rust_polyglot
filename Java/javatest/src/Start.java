@@ -1,28 +1,16 @@
 class Start {
     public static void main(String[] args) {
-        var c1 = new Contact("John Doe", (short) 2005);
-        System.out.println("Hello " + c1.card());
+        // 1) Array
+        Foo[] arr1 = new Foo[10];
+        System.out.println("item: " + arr1[3]);
+
+        // 2) Tuple (n/a)
+
+        // 3) Vec (ArrayList)
+
+        // 4) enum
+
+        // 5) Generics, Option, Result
+
     }
-}
-
-class Contact {
-    String fullName;
-    short since;
-
-    Contact(String fullName, short since) {
-        this.fullName = fullName;
-        this.since = since;
-    }
-
-    public String info() {
-        return this.fullName + " since: " + this.since;
-    }
-
-    public String card() {
-        return "BusinessCard: " + this.fullName;
-    }
-}
-
-interface BusinessCard {
-    public String card();
 }
