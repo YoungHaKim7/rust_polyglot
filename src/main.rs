@@ -3,9 +3,10 @@ struct Foo {}
 
 fn floor_divide(num: f32, by: f32) -> Result<i32, String> {
     if by == 0. {
-        return Err("Cannot divide by 0".to_string());
+        Err("Cannot divide by 0".to_string())
+    } else {
+        Ok((num / by).floor() as i32)
     }
-    return Ok((num / by).floor() as i32);
 }
 
 fn main() {
