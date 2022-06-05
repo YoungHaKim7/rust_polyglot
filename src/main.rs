@@ -14,7 +14,7 @@ fn main() {
     // 3) Vec ( ~ ArrayList)
     let mut arr2: Vec<Foo> = Vec::new();
     arr2.push(Foo {});
-    println!("item Vec__: {:?}", arr2[0]);
+    println!("item Vec__: {:?}", arr2.get(0));
 
     // 4) enum & match (enum & Java 1 Switch)
 
