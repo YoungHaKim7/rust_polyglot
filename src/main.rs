@@ -1,31 +1,18 @@
-use std::cmp::{Ord, Ordering};
+#[derive(Debug)]
+struct Foo {}
 
-fn compare_item<T: Ord>(item1: &T, item2: &T) -> Ordering {
-    item1.cmp(item2)
-}
-
-struct Container<T: Ord> {
-    item: T,
-}
-
-impl<T: Ord> Container<T> {
-    fn compare_item(&self, other_item: &T) -> Ordering {
-        self.item.cmp(other_item)
+fn floor_divide(num: f32, by: f32) -> Result<i32, String> {
+    if by == 0. {
+        return Result::Err("Cannot divide by 0".to_string());
     }
+    return Result::Ok((num / by).floor() as i32);
 }
 
 fn main() {
-    // 5) Generics
-    let c1 = Container { item: 123 };
-    let c2 = Container {
-        item: "Hello".to_string(),
-    };
-
-    println!("compare 1 : {:?}", c1.compare_item(&222));
-    println!("compare 2 : {:?}", c2.compare_item(&"zzzz".to_string()));
-    println!("compare 3 : {:?}", compare_item(&222, &111));
-
     // 6) Option (v.s. null & java. util. Optional)
+    let foo: Option<Foo> = Option::None;
 
     // 7) Result (v.s Exception)
+    let result = floor_divide(10., 0.);
+    println!("result : {:?} ", result)
 }

@@ -1,30 +1,26 @@
-import java.util.ArrayList;
+import java.util.Optional;
 
 class Start {
     public static void main(String[] args) {
+        // 6) Option (v.s. Null, ~Option)
+        Optional<Foo> foo = Optional.empty();
 
-        // 5) Generics, Option, Result
-        var c1 = new Container<Integer>(123);
-        var c2 = new Container<String>("Hello");
-
-        System.out.println("compare 1 : " + c1.compareItem(999));
-        System.out.println("compare 2 : " + c2.compareItem("zzz"));
-        System.out.println("compare 3 : " + Start.compare(222, 111));
+        // 7) Result (v.s. Exception)
+        try {
+            var result = Start.floorDivide(10, 0);
+            System.out.println("result : " + result);
+        } catch (Exception ex) {
+            System.out.println("ERROR CAUGHT - " + ex);
+        }
     }
 
-    public static <T extends Comparable> int compare(T item1, T item2) {
-        return item1.compareTo(item2);
+    public static int floorDivide(float num, float by) {
+        if (by == 0) {
+            throw new RuntimeException("Cannot divide by 0");
+        }
+        return (int) Math.floor(num / by);
     }
 }
 
-class Container<T extends Comparable> {
-    T item;
-
-    Container(T item) {
-        this.item = item;
-    }
-
-    int compareItem(T otherItem) {
-        return item.compareTo(otherItem);
-    }
+class Foo {
 }
