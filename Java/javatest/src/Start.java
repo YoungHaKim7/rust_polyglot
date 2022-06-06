@@ -2,25 +2,24 @@ import java.util.Optional;
 
 class Start {
     public static void main(String[] args) {
-        // 6) Option (v.s. Null, ~Option)
-        Optional<Foo> foo = Optional.empty();
+        var foo = new Foo(123);
 
-        // 7) Result (v.s. Exception)
-        try {
-            var result = Start.floorDivide(10, 0);
-            System.out.println("result : " + result);
-        } catch (Exception ex) {
-            System.out.println("ERROR CAUGHT - " + ex);
-        }
+        var fooB = foo;
+
+        Start.doStuff(foo);
+        Start.doStuff(fooB);
     }
 
-    public static int floorDivide(float num, float by) {
-        if (by == 0) {
-            throw new RuntimeException("Cannot divide by 0");
-        }
-        return (int) Math.floor(num / by);
+    static void doStuff(Foo foo) {
+        foo.x = foo.x + 1;
+        System.out.println("do stuff: " + foo.x);
     }
 }
 
 class Foo {
+    int x;
+
+    Foo(int x) {
+        this.x = x;
+    }
 }
