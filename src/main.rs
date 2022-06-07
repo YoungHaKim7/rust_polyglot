@@ -7,7 +7,7 @@ use redis::{
     AsyncCommands, Client,
 };
 
-#[tokio::main]
+#[tokio::main(flavor = "current_thread")]
 async fn main() -> Result<(), Box<dyn Error>> {
     // 1) Create Connection
     let client = Client::open("redis://127.0.0.1/")?;
@@ -32,7 +32,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let result: Option<StreamRangeReply> = con.xrevrange_count("my_stream", "+", "-", 10).await?;
     if let Some(reply) = result {
         for stream_id in reply.ids {
-            println!("-->> xrevrange stream entriy: {:?}", stream_id);
+            println!("-->> xrevrange stream entriy: {}", stream_id.id);
             for (name, value) in stream_id.map.iter() {
                 println!("  -->>  {}: {}", name, from_redis_value::<String>(value)?);
             }
@@ -65,14 +65,21 @@ async fn main() -> Result<(), Box<dyn Error>> {
     // 6) Add some stream entries
     sleep(Duration::from_millis(100)).await;
     con.xadd(
-        "my_strem",
+        "my_stream",
         "*",
         &[("name", "name-02"), ("title", "title 02")],
     )
     .await?;
+    sleep(Duration::from_millis(100)).await;
+    con.xadd(
+        "my_stream",
+        "*",
+        &[("name", "name-03"), ("title", "title 03")],
+    )
+    .await?;
 
     // 7) Final wait & cleanup
-    sleep(Duration::from_millis(1000)).await;
+    sleep(Duration::from_millis(10000)).await;
     con.del("my_key").await?;
     con.del("my_stream").await?;
 
