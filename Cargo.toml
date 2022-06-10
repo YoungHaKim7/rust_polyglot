@@ -3,6 +3,7 @@ name = "rust_polyglot"
 version = "0.1.0"
 edition = "2021"
 
+
 [dependencies]
-tokio = { version = "1.19.2", features = ["full"] }
-redis = { version = "0.21.5", features = ["tokio-comp"] }
+rand = "0.8.5"
+rusty_engine = "5.0.6"
