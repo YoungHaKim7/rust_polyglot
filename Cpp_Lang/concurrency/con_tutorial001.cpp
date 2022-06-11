@@ -9,6 +9,8 @@ void test(int x) {
 int main() {
 
   std::thread myThread(&test, 100);
+  myThread.join();
+
   std::cout << "hello from my main thread " << std::endl;
   return 0;
 }
