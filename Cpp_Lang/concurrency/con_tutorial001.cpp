@@ -1,3 +1,4 @@
+// g++ -std=c++17 con_tutorial001.cpp -o prog -lpthread
 #include <iostream>
 #include <thread>
 
