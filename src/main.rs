@@ -1,31 +1,13 @@
-trait Futures {
-    type Output;
-    fn poll(&mut self, wake: fn()) -> Poll<Self::Output>;
-}
-
-impl<T> Poll<T> {
-    pub fn map<U, F>(self, f: F) -> Poll<U>
-    where
-        F: FnOnce(T) -> U,
-    {
-        match self {
-            Poll::Ready(t) => Poll::Ready(f(t)),
-            Poll::Pending => Poll::Pending,
-        }
-    }
-}
-
-enum Poll<T> {
-    Ready(T),
-    Pending,
-}
-
-fn my_function() // -> impl Futures<Output = ()>
-{
-    println!("I'm an async function!");
-}
+use std::thread;
 
 fn main() {
-    my_function();
-}
+    thread::spawn(|| {
+        for i in 1..3 {
+            println!("Hello from {} thread!", i);
+        }
+    });
 
+    for i in 1..3 {
+        println!("hello from my main {} thread ", i);
+    }
+}
