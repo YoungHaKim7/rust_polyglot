@@ -1,6 +1,9 @@
 #include "csapp.h"
 #include <cstddef>
 #include <cstdio>
+#include <pthread.h>
+#include <stdio.h>
+#include <unistd.h>
 
 void *sum_mutex(void *vargp);
 
