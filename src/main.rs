@@ -1,16 +1,25 @@
-use std::thread;
-use std::time::Duration;
+// Display
+// Import (via `use`) the `fmt` module to make it available.
+use std::fmt;
+
+// Define a structure for which `fmt::Display` will be implemented. This is
+// a tuple struct named `Structure` that contains an `i32`.
+struct Structure(i32);
+
+// To use the `{}` marker, the trait `fmt::Display` must be implemented
+// manually for the type.
+
+impl fmt::Display for Structure {
+    // This trait requires `fmt` with this exact signature.
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        // Write strictly the first element into the supplied output
+        // stream: `f`. Returns `fmt::Result` which indicates whether the
+        // operation succeeded or failed. Note that `write!` uses syntax which
+        // is very simialr to `prinln!`.
+        write!(f, "{}", self.0)
+    }
+}
 
 fn main() {
-    thread::spawn(|| {
-        for i in 1..10 {
-            println!("Hello from {} thread!", i);
-            thread::sleep(Duration::from_millis(1));
-        }
-    });
-
-    for i in 1..10 {
-        println!("hello from my main {} thread ", i);
-        thread::sleep(Duration::from_millis(1));
-    }
+    todo!();
 }
