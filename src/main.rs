@@ -1,27 +1,20 @@
-// Test case : List
+// Formatting
 
+// 8진수
 use std::fmt;
 
-// Define a structure named `List` containing a `Vec`.
-struct List(Vec<i32>);
+struct Length(i32);
 
-impl fmt::Display for List {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let vec = &self.0;
+impl fmt::Octal for Length {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let val = self.0;
 
-        write!(f, "[")?;
-
-        for (count, v) in vec.iter().enumerate() {
-            if count != 0 {
-                write!(f, ", ")?;
-            }
-            write!(f, "{}", v)?;
-        }
-        write!(f, "]")
+        fmt::Octal::fmt(&val, f) // delegate to i32's implementation
     }
 }
-
 fn main() {
-    let v = List(vec![1, 2, 3]);
-    println!("{v}");
+    let l = Length(9);
+    println!("l as octal is: {l:o}");
+    // 0o12  8 진수 표기법
+    // = 9 decimal 10 진수
 }
