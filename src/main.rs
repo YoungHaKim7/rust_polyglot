@@ -1,10 +1,9 @@
-use std::collections::VecDeque;
+use rand::Rng;
+
 fn main() {
-    let mut a = VecDeque::from([1, 2, 3]);
+    let mut rng = rand::thread_rng();
 
-    a.push_back(6);
+    let vals: Vec<u64> = (0..1000).map(|_| rng.gen_range(0..1000)).collect();
 
-    let doubled: VecDeque<i32> = a.iter().map(|&x| x * 2).collect();
-
-    println!("{doubled:?}");
+    println!("{vals:?}");
 }
