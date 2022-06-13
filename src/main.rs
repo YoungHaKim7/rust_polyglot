@@ -1,17 +1,11 @@
+use rand::distributions::Uniform;
+use rand::Rng;
+
 fn main() {
-    use rand::Rng;
-    const CHARSET: &[u8] = b"ABCDEFGHIJKLMNOPQRSTUVWXYZ\
-                            abcdefghijklmnopqrstuvwxyz\
-                            0123456789)(*&^%$#@!~";
-    const PASSWORD_LEN: usize = 30;
     let mut rng = rand::thread_rng();
+    let range = Uniform::new(0, 1000);
 
-    let password: String = (0..PASSWORD_LEN)
-        .map(|_| {
-            let idx = rng.gen_range(0..CHARSET.len());
-            CHARSET[idx] as char
-        })
-        .collect();
+    let vals: Vec<u64> = (0..10).map(|_| rng.sample(&range)).collect();
 
-    println!("{:?}", password);
+    println!("{:?}", vals);
 }
