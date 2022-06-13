@@ -1,11 +1,10 @@
-use rand::distributions::Uniform;
-use rand::Rng;
-
+use std::collections::VecDeque;
 fn main() {
-    let mut rng = rand::thread_rng();
-    let range = Uniform::new(0, 1000);
+    let mut a = VecDeque::from([1, 2, 3]);
 
-    let vals: Vec<u64> = (0..10).map(|_| rng.sample(&range)).collect();
+    a.push_back(6);
 
-    println!("{:?}", vals);
+    let doubled: VecDeque<i32> = a.iter().map(|&x| x * 2).collect();
+
+    println!("{doubled:?}");
 }
