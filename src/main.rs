@@ -1,28 +1,21 @@
-// Sort a Vector of Structs
-
-#[derive(Debug, Eq, Ord, PartialEq, PartialOrd)]
-struct Person {
-    name: String,
-    age: u32,
-}
-
-impl Person {
-    pub fn new(name: String, age: u32) -> Self {
-        Person { name, age }
-    }
-}
+// Rayon
+// Test in parallel if any or all elements of a collection match a given predicate
+use rayon::prelude::*;
 
 fn main() {
-    let mut people = vec![
-        Person::new("Zoe".to_string(), 25),
-        Person::new("Al".to_string(), 60),
-        Person::new("John".to_string(), 1),
-    ];
+    let mut vec = vec![2, 4, 6, 8];
+    println!("vec![2, 4, 6, 8]");
+    println!("!vec.par_iter().any(|n| (*n % 2) != 0 ) = {}",!vec.par_iter().any(|n| (*n % 2) != 0 ));
+    println!("false 0 , true 1");
+    println!("vec.par_iter().all(|n| (*n % 2) == 0 ) = {}",vec.par_iter().any(|n| (*n % 2) == 0 ));
+    println!("!vec.par_iter().any(|n| (*n > 8) = {}",!vec.par_iter().any(|n| *n > 8 ));
+    println!("vec.par_iter().all(|n| (*n <= 8) = {}",vec.par_iter().all(|n| *n <= 8 ));
 
-    people.sort();
+    vec.push(9);
+    println!("----------------\nvec![2, 4, 6, 8, 9]");
+    println!("vec.par_iter().any(|n| (*n % 2) != 0 ) = {}",vec.par_iter().any(|n| (*n % 2) != 0 ));
+    println!("!vec.par_iter().all(|n| (*n % 2) == 0 ) = {}",!vec.par_iter().all(|n| (*n % 2) == 0 ));
+    println!("vec.par_iter().any(|n| (*n > 8) = {}",vec.par_iter().any(|n| *n > 8 ));
+    println!("!vec.par_iter().all(|n| (*n <= 8) = {}",!vec.par_iter().all(|n| *n <= 8 ));
 
-    println!("{people:?}");
-
-    people.sort_by(|a, b| b.age.cmp(&a.age));
-    println!("{people:?}");
 }
