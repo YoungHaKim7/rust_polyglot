@@ -1,19 +1,28 @@
-use rayon::prelude::*;
-use std::time::Instant;
+// Sort a Vector of Structs
+
+#[derive(Debug, Eq, Ord, PartialEq, PartialOrd)]
+struct Person {
+    name: String,
+    age: u32,
+}
+
+impl Person {
+    pub fn new(name: String, age: u32) -> Self {
+        Person { name, age }
+    }
+}
 
 fn main() {
-    let time_1 = Instant::now();
-    let async_vec: Vec<_> = (0..1_000_000).into_par_iter().collect();
-    let time_1_ela = time_1.elapsed();
+    let mut people = vec![
+        Person::new("Zoe".to_string(), 25),
+        Person::new("Al".to_string(), 60),
+        Person::new("John".to_string(), 1),
+    ];
 
-    let time_2 = Instant::now();
-    let sync_vec: Vec<_> = (0..1_000_000).into_iter().collect();
-    let time_2_ela = time_2.elapsed();
+    people.sort();
 
-    // for i in async_vec.iter() {
-    //     println!("Element : {:?}", i);
-    // }
+    println!("{people:?}");
 
-    println!("async_vec time__rayon : {:?}", time_1_ela);
-    println!("sync_vec time : {:?}", time_2_ela);
+    people.sort_by(|a, b| b.age.cmp(&a.age));
+    println!("{people:?}");
 }

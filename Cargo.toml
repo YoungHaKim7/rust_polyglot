@@ -5,4 +5,4 @@ edition = "2021"
 
 
 [dependencies]
-rayon = "1.5.3"
+rand = "0.8.5"
