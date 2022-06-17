@@ -1,3 +1,4 @@
+// Map-reduce in parallel
 use rayon::prelude::*;
 
 struct Person {
@@ -20,7 +21,7 @@ fn main() {
         .par_iter()
         .map(|x| x.age)
         .filter(|&x| x > 30)
-        .reduce(|| 0, |x, y| x + y);
+        .reduce(|| 0, |x, y| x + y); // fold 비슷 reduce None 값이 나온다
 
     let alt_sum_30: u32 = v.par_iter().map(|x| x.age).filter(|&x| x > 30).sum();
     let avg_over_30 = sum_over_30 as f32 / num_over_30;
