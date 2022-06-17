@@ -1,0 +1,16 @@
+(module
+  (type (;0;) (func (param i32 i32) (result i32)))
+  (func (;0;) (type 0) (param i32 i32) (result i32)
+    get_local 1
+    get_local 0
+    i32.add)
+  (table (;0;) 1 1 anyfunc)
+  (memory (;0;) 17)
+  (global (;0;) i32 (i32.const 1049118))
+  (global (;1;) i32 (i32.const 1049118))
+  (export "memory" (memory 0))
+  (export "__indirect_function_table" (table 0))
+  (export "__heap_base" (global 0))
+  (export "__data_end" (global 1))
+  (export "add" (func 0))
+  (data (i32.const 1049096) "invalid malloc request"))
