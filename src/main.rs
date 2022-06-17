@@ -1,14 +1,24 @@
-use std::sync::atomic::{AtomicUsize, Ordering};
-use std::{sync::Arc, thread};
+// Sort a vector in parallel
+use rand::thread_rng;
+use rand::Rng;
+use rayon::prelude::*;
+use std::time::Instant;
+
 fn main() {
-    let data = vec![1, 2, 3, 4];
+    let mut rng = thread_rng();
+    let mut v: Vec<u64> = (0..20_000_000)
+        .map(|_| rng.gen_range(0..20_000_000))
+        .collect();
+    let time_1 = Instant::now();
+    v.par_sort_unstable();
+    let time_1_ela = time_1.elapsed();
+    println!("par_sort time : {:?}", time_1_ela);
 
-    let idx = Arc::new(AtomicUsize::new(0));
-    let other_idx = idx.clone();
-
-    thread::spawn(move || {
-        other_idx.fetch_add(10, Ordering::SeqCst);
-    });
-
-    println!("{}", data[idx.load(Ordering::SeqCst)]);
+    let mut v1: Vec<u64> = (0..20_000_000)
+        .map(|_| rng.gen_range(0..20_000_000))
+        .collect();
+    let time_2 = Instant::now();
+    v1.sort();
+    let time_2_ela = time_2.elapsed();
+    println!("sort time : {:?}", time_2_ela);
 }
