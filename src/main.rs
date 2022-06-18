@@ -23,6 +23,12 @@ impl fmt::Display for MyError {
     }
 }
 
+impl Error for MyError {
+    fn description(&self) -> &str {
+        &self.details
+    }
+}
+
 lazy_static! {
     static ref FRUIT: Mutex<Vec<String>> = Mutex::new(Vec::new());
 }
@@ -44,6 +50,13 @@ fn main() -> Result<(), Box<dyn Error>> {
             .enumerate()
             .for_each(|(i, item)| println!("{} : {:?}", i, item));
     }
-    // insert("grape").to_string()?;
+    insert("grape")?;
+    {
+        let db = FRUIT.lock().map_err(|_| "Failed to acquire MutexGuard");
+
+        db.iter()
+            .enumerate()
+            .for_each(|(i, item)| println!("{} : {:?}", i, item));
+    }
     Ok(())
 }
