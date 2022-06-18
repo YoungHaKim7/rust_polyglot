@@ -1,62 +1,50 @@
-// Maintain global mutable state
-use lazy_static::lazy_static;
-use std::error::Error;
-use std::fmt;
-use std::sync::Mutex;
+// Calculate SHA256 sum of iso files concurrently
+use ring::digest::{Context, Digest, SHA256};
+use std::fs::File;
+use std::io::{BufReader, Error, Read};
+use std::path::Path;
+use std::sync::mpsc::channel;
+use threadpool::ThreadPool;
+use walkdir::WalkDir;
 
-#[derive(Debug)]
-struct MyError {
-    details: String,
-}
+fn compute_digest<P: AsRef<Path>>(filepath: P) -> Result<(Digest, P), Error> {
+    let mut buf_reader = BufReader::new(File::open(&filepath)?);
+    let mut context = Context::new(&SHA256);
+    let mut buffer = [0; 1024];
 
-impl MyError {
-    fn new(msg: &str) -> MyError {
-        MyError {
-            details: msg.to_string(),
+    loop {
+        let count = buf_reader.read(&mut buffer)?;
+        if count == 0 {
+            break;
         }
+        context.update(&buffer[..count]);
     }
+
+    Ok((context.finish(), filepath))
 }
 
-impl fmt::Display for MyError {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.details)
-    }
-}
+fn main() -> Result<(), Error> {
+    let pool = ThreadPool::new(4);
 
-impl Error for MyError {
-    fn description(&self) -> &str {
-        &self.details
-    }
-}
+    let (tx, rx) = channel();
 
-lazy_static! {
-    static ref FRUIT: Mutex<Vec<String>> = Mutex::new(Vec::new());
-}
-
-fn insert(fruit: &str) -> Result<(), Box<dyn Error>> {
-    let mut db = FRUIT.lock().map_err(|_| "Failed to acquire MutexGuard")?;
-    db.push(fruit.to_string());
-    Ok(())
-}
-
-fn main() -> Result<(), Box<dyn Error>> {
-    insert("apple")?;
-    insert("orange")?;
-    insert("peach")?;
+    for entry in WalkDir::new("/Users/globalyoung/Desktop/")
+        .follow_links(true)
+        .into_iter()
+        .filter_map(|e| e.ok())
+        .filter(|e| !e.path().is_dir())
     {
-        let db = FRUIT.lock().map_err(|_| "Failed to acquire MutexGuard");
-
-        db.iter()
-            .enumerate()
-            .for_each(|(i, item)| println!("{} : {:?}", i, item));
+        let path = entry.path().to_owned();
+        let tx = tx.clone();
+        pool.execute(move || {
+            let digest = compute_digest(path);
+            tx.send(digest).expect("Could not send data!");
+        });
     }
-    insert("grape")?;
-    {
-        let db = FRUIT.lock().map_err(|_| "Failed to acquire MutexGuard");
-
-        db.iter()
-            .enumerate()
-            .for_each(|(i, item)| println!("{} : {:?}", i, item));
+    drop(tx);
+    for t in rx.iter() {
+        let (sha, path) = t?;
+        println!("{:?} {:?}", sha, path)
     }
     Ok(())
 }
