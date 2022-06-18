@@ -93,6 +93,8 @@ fn main() -> Result<(), RecvError> {
         let (x, y, pixel) = rx.recv()?;
         img.put_pixel(x, y, pixel);
     }
-    let _ = img.save("output.png");
+    let _ = img.save(
+        "/Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/images/output.png",
+    );
     Ok(())
 }
