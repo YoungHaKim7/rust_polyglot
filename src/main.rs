@@ -1,33 +1,53 @@
-// Map-reduce in parallel
-use rayon::prelude::*;
+// Create a parallel pipeline
+//  This example uses the crossbeam and crossbeam-channel crates to create parallel pipeline.
 
-struct Person {
-    age: u32,
-}
+extern crate crossbeam;
+extern crate crossbeam_channel;
+
+use crossbeam_channel::bounded;
+use std::thread;
+use std::time::Duration;
 
 fn main() {
-    let v: Vec<Person> = vec![
-        Person { age: 23 },
-        Person { age: 19 },
-        Person { age: 42 },
-        Person { age: 17 },
-        Person { age: 17 },
-        Person { age: 31 },
-        Person { age: 30 },
-    ];
+    let (snd1, rcv1) = bounded(1);
+    let (snd2, rcv2) = bounded(1);
+    let n_msgs = 4;
+    let n_workers = 2;
 
-    let num_over_30 = v.par_iter().filter(|&x| x.age > 30).count() as f32;
-    let sum_over_30 = v
-        .par_iter()
-        .map(|x| x.age)
-        .filter(|&x| x > 30)
-        .reduce(|| 0, |x, y| x + y); // fold 비슷 reduce None 값이 나온다
+    crossbeam::scope(|s| {
+        // Producer thread
+        s.spawn(|_| {
+            for i in 0..n_msgs {
+                snd1.send(i).unwrap();
+                println!("Source sent {i}");
+            }
+            // Close the channel = this is necessary to exit
+            // the for-loop in the worker
+            drop(snd1);
+        });
 
-    let alt_sum_30: u32 = v.par_iter().map(|x| x.age).filter(|&x| x > 30).sum();
-    let avg_over_30 = sum_over_30 as f32 / num_over_30;
-    let alt_avg_over_30 = alt_sum_30 as f32 / num_over_30;
+        // Parallel processing by 2 threads
+        for _ in 0..n_workers {
+            // Send to sink, receive from source
+            let (sendr, recvr) = (snd2.clone(), rcv1.clone());
+            // Spawn workers in separate threads:w
 
-    assert!((avg_over_30 - alt_avg_over_30).abs() < std::f32::EPSILON);
-    println!("The average age of people older than 30 is {}", avg_over_30);
+            s.spawn(move |_| {
+                thread::sleep(Duration::from_millis(500));
+                for msg in recvr.iter() {
+                    println!("Worker {:?} received {}. ", thread::current().id(), msg);
+                    sendr.send(msg * 2).unwrap();
+                }
+            });
+        }
+        // Close the channel, otherwise sink will never
+        // exit the for-loop
+        drop(snd2);
+
+        // Sink
+        for msg in rcv2.iter() {
+            println!("Sink received {msg}");
+        }
+    })
+    .unwrap();
 }
-
