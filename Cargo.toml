@@ -4,6 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-plotlib = "0.5.1"
+plotters = "0.3.1"
 
 
