@@ -1,100 +1,45 @@
-#[macro_use]
-// extern crate error_chain;
-extern crate image;
-extern crate num;
-extern crate threadpool;
-// Draw fractal dispatching work to a thread pool
+use plotlib::page::Page;
+use plotlib::repr::Plot;
+use plotlib::style::{PointMarker, PointStyle};
+use plotlib::view::ContinuousView;
 
-use image::{ImageBuffer, Pixel, Rgb};
-use num::complex::Complex;
-use std::sync::mpsc::{channel, RecvError};
-use threadpool::ThreadPool;
+fn main() {
+    // Scatter plots expect a list of pairs
+    let data1 = vec![
+        (-3.0, 2.3),
+        (-1.6, 5.3),
+        (0.3, 0.7),
+        (4.3, -1.4),
+        (6.4, 4.3),
+        (8.5, 3.7),
+    ];
 
-// error_chain! {
-//     foreign_links {
-//         MpscRecv(RecvError);
-//         Io(std::io::Error);
-//     }
-// }
+    // We create our scatter plot from the data
+    let s1: Plot = Plot::new(data1).point_style(
+        PointStyle::new()
+            .marker(PointMarker::Square) // setting the marker to be a square
+            .colour("#DD3355"),
+    ); // and a custom colour
 
-fn wavelength_to_rgb(wavelength: u32) -> Rgb<u8> {
-    let wave = wavelength as f32;
+    // We can plot multiple data sets in the same view
+    let data2 = vec![(-1.4, 2.5), (7.2, -0.3)];
+    let s2: Plot = Plot::new(data2).point_style(
+        PointStyle::new() // uses the default marker
+            .colour("#35C788"),
+    ); // and a different colour
 
-    let (r, g, b) = match wavelength {
-        380..=439 => ((440. - wave) / (440. - 380.), 0.0, 1.0),
-        440..=489 => (0.0, (wave - 440.) / (490. - 440.), 1.0),
-        490..=509 => (0.0, 1.0, (510. - wave) / (510. - 490.)),
-        510..=579 => ((wave - 510.) / (580. - 510.), 1.0, 0.0),
-        580..=644 => (1.0, (645. - wave) / (645. - 580.), 0.0),
-        645..=780 => (1.0, 0.0, 0.0),
-        _ => (0.0, 0.0, 0.0),
-    };
+    // The 'view' describes what set of data is drawn
+    let v = ContinuousView::new()
+        .add(s1)
+        .add(s2)
+        .x_range(-5., 10.)
+        .y_range(-2., 6.)
+        .x_label("Some varying variable")
+        .y_label("The response of something");
 
-    let factor = match wavelength {
-        380..=419 => 0.3 + 0.7 * (wave - 380.) / (420. - 380.),
-        701..=780 => 0.3 + 0.7 * (780. - wave) / (780. - 700.),
-        _ => 1.0,
-    };
-
-    let (r, g, b) = (
-        normalize(r, factor),
-        normalize(g, factor),
-        normalize(b, factor),
-    );
-    Rgb::from_channels(r, g, b, 0)
+    // A page with a single view is then saved to an SVG file
+    Page::single(&v)
+        .save("/Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/images/scatter.svg")
+        .unwrap();
 }
 
-fn julia(c: Complex<f32>, x: u32, y: u32, width: u32, height: u32, max_iter: u32) -> u32 {
-    let width = width as f32;
-    let height = height as f32;
-
-    let mut z = Complex {
-        re: 3.0 * (x as f32 - 0.5 * width) / width,
-        im: 2.0 * (y as f32 - 0.5 * height) / height,
-    };
-
-    let mut i = 0;
-    for t in 0..max_iter {
-        if z.norm() >= 2.0 {
-            break;
-        }
-        z = z * z + c;
-        i = t;
-    }
-    i
-}
-
-fn normalize(color: f32, factor: f32) -> u8 {
-    ((color * factor).powf(0.8) * 255.) as u8
-}
-
-fn main() -> Result<(), RecvError> {
-    let (width, height) = (1920, 1080);
-    let mut img = ImageBuffer::new(width, height);
-    let iterations = 300;
-
-    let c = Complex::new(-0.8, 0.156);
-
-    let pool = ThreadPool::new(4);
-    let (tx, rx) = channel();
-
-    for y in 0..height {
-        let tx = tx.clone();
-        pool.execute(move || {
-            for x in 0..width {
-                let i = julia(c, x, y, width, height, iterations);
-                let pixel = wavelength_to_rgb(380 + i * 400 / iterations);
-                tx.send((x, y, pixel)).expect("Could not send data!");
-            }
-        });
-    }
-
-    for _ in 0..(width * height) {
-        let (x, y, pixel) = rx.recv()?;
-        img.put_pixel(x, y, pixel);
-    }
-    let _ = img.save(
-        "/Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/images/output.png",
-    );
-    Ok(())
-}
