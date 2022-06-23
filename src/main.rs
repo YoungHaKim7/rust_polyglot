@@ -1,4 +1,9 @@
-fn y_xxx<T: std::ops::Mul<Output = T> + Copy>(x: T) -> T {
+use std::ops::Mul;
+
+fn y_xxx<T>(x: T) -> T
+where
+    T: Mul<Output = T> + Copy,
+{
     x * x * x
 }
 
