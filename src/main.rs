@@ -1,14 +1,18 @@
-use std::ops::Mul;
-
-fn y_xxx<T>(x: T) -> T
-where
-    T: Mul<Output = T> + Copy,
-{
-    x * x * x
-}
+use plotters::prelude::*;
 
 fn main() {
-    let my_vec = ((-10..=10).map(|x| (x, y_xxx(x)))).collect::<Vec<_>>();
+    let root_area = BitMapBackend::new("images/111.png", (600, 400)).into_drawing_area();
+    root_area.fill(&WHITE).unwrap();
 
-    println!("{my_vec:?}");
+    let mut ctx = ChartBuilder::on(&root_area)
+        .set_label_area_size(LabelAreaPosition::Left, 40)
+        .set_label_area_size(LabelAreaPosition::Bottom, 40)
+        .caption("Line Plot Demo", ("sans-serif", 40))
+        .build_cartesian_2d(-10..10, 0..100)
+        .unwrap();
+
+    ctx.configure_mesh().draw().unwrap();
+
+    ctx.draw_series(LineSeries::new((-10..=10).map(|x| (x, x * x)), &GREEN))
+        .unwrap();
 }
