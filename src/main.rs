@@ -1,4 +1,4 @@
-fn y_xxx(x: i32) -> i32 {
+fn y_xxx<T: std::ops::Mul<Output = T> + Copy>(x: T) -> T {
     x * x * x
 }
 
