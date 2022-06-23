@@ -1,13 +1,13 @@
 use plotters::prelude::*;
 
 fn main() {
-    let root_area = BitMapBackend::new("images/2222.png", (1200, 800)).into_drawing_area();
+    let root_area = BitMapBackend::new("images/sincos2222.png", (1200, 800)).into_drawing_area();
     root_area.fill(&WHITE).unwrap();
 
     let mut ctx = ChartBuilder::on(&root_area)
         .set_label_area_size(LabelAreaPosition::Left, 40)
         .set_label_area_size(LabelAreaPosition::Bottom, 40)
-        .caption("Legend", ("sans-serif", 40))
+        .caption("Sin & Cos graph", ("sans-serif", 40))
         .build_cartesian_2d(-4.0..4.0, -1.2..1.2)
         .unwrap();
 
@@ -19,7 +19,7 @@ fn main() {
         &RED,
     ))
     .unwrap()
-    .label("Sine * Cosine")
+    .label("Sine * Cos")
     .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &RED));
 
     ctx.draw_series(LineSeries::new(x_kps.iter().map(|x| (*x, x.cos())), &BLUE))
