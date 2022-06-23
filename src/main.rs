@@ -14,10 +14,13 @@ fn main() {
     ctx.configure_mesh().draw().unwrap();
 
     let x_kps: Vec<_> = (-80..80).map(|x| x as f64 / 20.0).collect();
-    ctx.draw_series(LineSeries::new(x_kps.iter().map(|x| (*x, x.sin())), &RED))
-        .unwrap()
-        .label("Sine")
-        .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &RED));
+    ctx.draw_series(LineSeries::new(
+        x_kps.iter().map(|x| (*x, x.sin() * x.cos())),
+        &RED,
+    ))
+    .unwrap()
+    .label("Sine * Cosine")
+    .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &RED));
 
     ctx.draw_series(LineSeries::new(x_kps.iter().map(|x| (*x, x.cos())), &BLUE))
         .unwrap()
