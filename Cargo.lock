@@ -517,6 +517,7 @@ dependencies = [
 name = "rust_polyglot"
 version = "0.1.0"
 dependencies = [
+ "chrono",
  "plotters",
 ]
 
