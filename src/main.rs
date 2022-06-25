@@ -1,8 +1,9 @@
+// https://lkarev.medium.com/calculating-30000-pi-digits-in-10-seconds-using-multi-threaded-programming-cc417d00a217
 use factorial::Factorial;
 
 fn main() {
     let mut sum: f64 = 0.0;
-    let max_elements: u32 = 3;
+    let max_elements: u32 = 10;
 
     for n in 0..max_elements {
         let first_fraction: f64 =
