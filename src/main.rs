@@ -1,31 +1,44 @@
-use rayon::prelude::*;
-use std::f64::consts::*;
+use std::time::{Duration, Instant, SystemTime};
 
-pub fn factorial(n: usize) -> f64 {
-    let out = (1..=n).into_par_iter().reduce(|| 1, |a, b| a * b);
-    out as f64
+fn fibonacci_recusive(n: i64) -> i64 {
+    if n < 2 {
+        return n;
+    }
+    return fibonacci_recusive(n - 1) + fibonacci_recusive(n - 2);
 }
 
-pub fn estimate_pi(iterations: usize) -> f64 {
-    let factor = (SQRT_2 * 2.0) / 9801.0;
+fn fibonacci_iterative(n: i64) -> i64 {
+    let mut first_number: i64 = 0;
+    let mut second_number: i64 = 0;
+    let mut current_number: i64 = 1;
 
-    let sum = (0..iterations)
-        .into_par_iter()
-        .map(|i| {
-            let k = i as f64;
+    let mut i: i64 = 1;
 
-            let numerator = factorial(4 * i) * (1103.0 + (26390.0 * k));
-            let denominator = factorial(i).powf(4.0) * (396_f64).powf(4.0 * k);
+    while i < n {
+        first_number = second_number;
 
-            factor * numerator / denominator
-        })
-        .reduce(|| 0.0, |a, b| a + b);
+        second_number = current_number;
 
-    1.0 / sum
+        current_number = first_number + second_number;
+
+        i = i + 1;
+    }
+    current_number
 }
 
 fn main() {
-    println!("pi_a: {:.70}", estimate_pi(4));
-    println!("pi_c: {:.70}", PI);
-}
+    let start_sys_time_recursive = Instant::now();
+    println!("{}", fibonacci_recusive(50));
+    println!(
+        "Recursive {:?}",
+        start_sys_time_recursive.elapsed().as_millis()
+    );
 
+    let start_sys_time_iterative = Instant::now();
+
+    println!("{}", fibonacci_iterative(50));
+    println!(
+        "Recursive {:?} mssec",
+        start_sys_time_iterative.elapsed().as_millis()
+    );
+}
