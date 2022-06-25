@@ -1,35 +1,23 @@
-use plotters::prelude::*;
+use factorial::Factorial;
 
 fn main() {
-    let root_area = BitMapBackend::new("images/sincos2222.png", (1200, 800)).into_drawing_area();
-    root_area.fill(&WHITE).unwrap();
+    let mut sum: f64 = 0.0;
+    let max_elements: u32 = 3;
 
-    let mut ctx = ChartBuilder::on(&root_area)
-        .set_label_area_size(LabelAreaPosition::Left, 40)
-        .set_label_area_size(LabelAreaPosition::Bottom, 40)
-        .caption("Sin & Cos graph", ("sans-serif", 40))
-        .build_cartesian_2d(-4.0..4.0, -1.2..1.2)
-        .unwrap();
+    for n in 0..max_elements {
+        let first_fraction: f64 =
+            (4 * n).factorial() as f64 / ((4_u32.pow(n) * n.factorial()).pow(4)) as f64;
 
-    ctx.configure_mesh().draw().unwrap();
+        let second_fraction: f64 = (23690 * n + 1103) as f64 / (99_f64.powf((4 * n) as f64));
 
-    let x_kps: Vec<_> = (-80..80).map(|x| x as f64 / 20.0).collect();
-    ctx.draw_series(LineSeries::new(
-        x_kps.iter().map(|x| (*x, x.sin() * x.cos())),
-        &RED,
-    ))
-    .unwrap()
-    .label("Sine * Cos")
-    .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &RED));
+        let sum_element: f64 = first_fraction * second_fraction;
 
-    ctx.draw_series(LineSeries::new(x_kps.iter().map(|x| (*x, x.cos())), &BLUE))
-        .unwrap()
-        .label("Cosine")
-        .legend(|(x, y)| PathElement::new(vec![(x, y), (x + 20, y)], &BLUE));
+        sum += sum_element;
+    }
 
-    ctx.configure_series_labels()
-        .border_style(&BLACK)
-        .background_style(&WHITE.mix(0.8))
-        .draw()
-        .unwrap();
+    let first_const: f64 = 8_f64.sqrt() / (99_f64.powf(2_f64));
+
+    let result: f64 = 1_f64 / (first_const * sum);
+
+    println!("Pi is {} ", result);
 }
