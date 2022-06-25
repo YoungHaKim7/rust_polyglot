@@ -4,6 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-rug = "1.16.0"
+rayon = "1.5.3"
 
 
