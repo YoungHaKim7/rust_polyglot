@@ -18,8 +18,8 @@ int fib(int n) {
 
 int main() {
   double s = omp_get_wtime();
-  int z = fib(42);
+  int z = fib(10);
   double sec = omp_get_wtime() - s;
 
-  printf("the result = %d in time = %f", z, sec);
+  printf("the result = %d in time = %f sec", z, sec);
 }
