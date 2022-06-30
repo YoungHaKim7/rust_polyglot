@@ -1,1 +1,0 @@
-/Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/Rust_Lang/rust_optimization/target/debug/rust_optimization: /Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/Rust_Lang/rust_optimization/src/main.rs
