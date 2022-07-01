@@ -12,7 +12,7 @@ int fib(int n) {
 }
 int main() {
   double start, end;
-  int n = 42;
+  int n = 31;
   start = (double)clock() / CLOCKS_PER_SEC;
   printf("fib(%d) = %d \n", n, fib(n));
   end = (((double)clock()) / CLOCKS_PER_SEC);
