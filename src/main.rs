@@ -1,15 +1,14 @@
-use std::arch::asm;
-fn do_nothing() {
-    #![feature(asm)]
-    unsafe {
-        asm!("NOP");
-    }
+// https://riptutorial.com/rust/example/24222/displaying-raw-pointers
+use std::ptr;
 
-    // asm!("NOP");
-    // That would be invalid here, because we are no longer in an
-    // unsafe block.
-}
-
+// Create some data, a raw pointer pointing to it and a null pointer
 fn main() {
-    do_nothing();
+    let data: u32 = 42;
+    let raw_ptr = &data as *const u32;
+    let null_ptr = ptr::null() as *const u32;
+
+    // the {:p} mapping shows pointer values as hexadecimal memory addresses
+    println!("Data address: {:p}", &data);
+    println!("Raw pointer address: {:p}", raw_ptr);
+    println!("Null pointer address: {:p}", null_ptr);
 }
