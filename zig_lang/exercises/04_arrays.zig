@@ -7,5 +7,9 @@ pub fn main() void {
 
     const first = some_primes[0];
 
-    std.debug.print("Fisrt: {}", .{first});
+    const fourth = some_primes[3];
+
+    const length = some_primes.len;
+
+    std.debug.print("Fisrt: {}, Fourth : {}, length : {}\n", .{ first, fourth, length });
 }
