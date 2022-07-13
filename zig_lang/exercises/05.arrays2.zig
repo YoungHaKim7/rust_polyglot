@@ -8,4 +8,8 @@ pub fn main() void {
     const leet = le ++ et;
 
     print("LEET: {any}\n", .{leet});
+
+    const bit_pattern = [_]u8{ 1, 0, 0, 1 } ** 3;
+
+    print("bit_pattern : {any}", .{bit_pattern});
 }
