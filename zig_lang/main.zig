@@ -1,32 +1,26 @@
+// zig array
+
 const std = @import("std");
-const json = std.json;
-const payload =
-    \\{
-    \\    "vals": {
-    \\        "testing": 1,
-    \\        "production": 42
-    \\    },
-    \\    "uptime": 9999
-    \\}
-;
-const Config = struct {
-    vals: struct { testing: u8, production: u8 },
-    uptime: u64,
-};
-const config = x: {
-    var stream = json.TokenStream.init(payload);
-    const res = json.parse(Config, &stream, .{});
-    // Assert no error can occur since we are
-    // parsing this JSON at comptime!
-    break :x res catch unreachable;
-};
-pub fn main() !void {
-    if (config.vals.production > 50) {
-        @compileError("only up to 50 supported");
+const print = std.debug.print;
+
+pub fn main() void {
+    const le = [_]u8{ 1, 3 };
+    const et = [_]u8{ 3, 7 };
+
+    const leet = le ++ et;
+
+    // It should result in: 1 0 0 1 1 0 0 1 1 0 0 1
+    const my_array = [_]u8{ 1, 0, 0, 1 } ** 3;
+    print("LEET : {any}\n", .{leet});
+
+    print("my_array : {any}\n", .{my_array});
+
+    // for_each
+    for (leet) |n| {
+        print("{}\n", .{n});
     }
-    std.log.info("up={d}", .{config.uptime});
-}
-test "integer overflow at runtime" {
-    var x: u8 = 255;
-    x += 1;
+
+    for (my_array) |n| {
+        print("{}", .{n});
+    }
 }
