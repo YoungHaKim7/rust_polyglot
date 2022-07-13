@@ -16,4 +16,10 @@ pub fn main() void {
     for (leet) |n| {
         print("{}\n", .{n});
     }
+
+    for (bit_pattern) |n| {
+        print("{}\n", .{n});
+    }
+
+    print("\n", .{});
 }
