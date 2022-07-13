@@ -1,11 +1,11 @@
 const std = @import("std");
-// const fmt = @import("fmt");
+const print = std.debug.print;
 
 pub fn main() void {
     const le = [_]u8{ 1, 3 };
-    // const et = [_]u8{ 3, 7 };
+    const et = [_]u8{ 3, 7 };
 
-    // const leet = le ++ et;
+    const leet = le ++ et;
 
-    std.debug.print("LEET: {}\n", .{le});
+    print("LEET: {any}\n", .{leet});
 }
