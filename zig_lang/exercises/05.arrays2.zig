@@ -11,5 +11,9 @@ pub fn main() void {
 
     const bit_pattern = [_]u8{ 1, 0, 0, 1 } ** 3;
 
-    print("bit_pattern : {any}", .{bit_pattern});
+    print("bit_pattern : {any}\n", .{bit_pattern});
+
+    for (leet) |n| {
+        print("{}\n", .{n});
+    }
 }
