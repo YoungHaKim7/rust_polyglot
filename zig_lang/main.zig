@@ -14,6 +14,7 @@ pub fn main() void {
     print("LEET : {any}\n", .{leet});
 
     print("my_array : {any}\n", .{my_array});
+    print("my_array : {any}\n", .{my_array});
 
     // for_each
     for (leet) |n| {
