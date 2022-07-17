@@ -12,5 +12,5 @@ pub fn main() void {
     const tom = "Tom";
     const major_tom = major ++ tom;
 
-    print("d = {u}\n {s}\n{s}\n", .{ d, laugh, major_tom });
+    print("d = {d}\n {s}\n{s}\n", .{ d, laugh, major_tom });
 }
