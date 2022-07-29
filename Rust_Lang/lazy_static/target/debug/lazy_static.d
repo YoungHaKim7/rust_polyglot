@@ -1,0 +1,1 @@
+/Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/Rust_Lang/lazy_static/target/debug/lazy_static: /Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/Rust_Lang/lazy_static/src/main.rs
