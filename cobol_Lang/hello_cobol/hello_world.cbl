@@ -1,0 +1,8 @@
+       >>SOURCE FORMAT FREE
+IDENTIFICATION DIVISION.
+PROGRAM-ID. hello_world.
+
+PROCEDURE DIVISION.
+DISPLAY "Hello world Cobol Language"
+
+STOP RUN.
