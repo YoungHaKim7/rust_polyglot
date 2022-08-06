@@ -1,4 +1,7 @@
+/.clj-kondo
 /images
 /target
 /assets
 .vimspector.json
+/.vscode
+/.lsp
