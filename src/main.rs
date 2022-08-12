@@ -1,17 +1,20 @@
-// use std::sync::Arc;
+use std::os::unix::io::{BorrowedFd, OwnedFd};
 
-use std::sync::Mutex;
+extern "C" {
+    fn close(fd: OwnedFd) -> i32;
 
-static S: Mutex<String> = Mutex::new(String::new());
+    fn ftruncate(fd: BorrowedFd, size: i64) -> i32;
+}
 
-fn do_a_call() {
-    let h = "hello";
-    S.lock().unwrap().push_str(h);
-    println!("{S:?}");
+// windows
+use std::os::windows::io::{BorrowedHandle, OwnedHandle};
+
+extern "C" {
+    fn CloseHandle(handle: OwnedHandle) -> bool;
+
+    fn SetEndOfFile(handle: BorrowedHandle) -> bool;
 }
 
 fn main() {
-    do_a_call();
-    do_a_call();
-    do_a_call();
+    todo!();
 }
