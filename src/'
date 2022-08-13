@@ -1,4 +1,3 @@
-#[derive(Debug)]
 pub enum Thing {
     A,
     B,
@@ -11,6 +10,6 @@ impl Drop for Thing {
 fn main() {
     let a = Thing::A;
 
-    println!("{a:?}");
+    println!("{a}");
     // let n = Thing::B as i32;
 }
