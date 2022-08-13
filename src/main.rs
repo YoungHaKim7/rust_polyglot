@@ -8,7 +8,7 @@ type Map = HashMap<String, String>;
 fn handle_n_times(count: i32, arc_map: Arc<Mutex<Map>>) {
     for i in 0..count {
         let clone_arc = arc_map.clone();
-        thread::spawn(move || {
+        thread::scope(|_| {
             let mut map = clone_arc.lock().unwrap();
             map.insert(format!("key-{}", i), format!("value-{}", i));
         });
