@@ -1,16 +1,9 @@
-use std::collections::VecDeque;
-use std::io::{Read, Write};
-
 fn main() {
-    let mut buf: VecDeque<u8> = VecDeque::new();
-    buf.write_all(b"Hello ");
-    write!(buf, ", {}", "world");
+    let s = "abc".to_string();
+    let a = [s; 0];
 
-    let mut s = String::new();
-    buf.read_to_string(&mut s);
+    dbg!(&a);
+    // const A: [String; 0] = [String::new(); 0];
 
-    println!("{}", &s);
-
-    println!("{}", s.is_empty());
-    println!("{}", buf.is_empty());
+    println!("{:?}", a);
 }
