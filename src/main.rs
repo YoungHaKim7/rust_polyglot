@@ -6,5 +6,11 @@ fn main() {
     buf.write_all(b"Hello ");
     write!(buf, ", {}", "world");
 
-    println!("{buf:?}");
+    let mut s = String::new();
+    buf.read_to_string(&mut s);
+
+    println!("{}", &s);
+
+    println!("{}", s.is_empty());
+    println!("{}", buf.is_empty());
 }
