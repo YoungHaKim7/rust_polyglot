@@ -15,22 +15,13 @@ struct Human {
     name: String,
 }
 
+impl Constitution for Elf {}
+impl Constitution for Human {}
+
 // The constitution bonus for a dwarf is 2
 impl Constitution for Dwarf {
     fn constitution_bonus(&self) -> u8 {
         2
-    }
-}
-
-impl Constitution for Elf {
-    fn constitution_bonus(&self) -> u8 {
-        0
-    }
-}
-
-impl Constitution for Human {
-    fn constitution_bonus(&self) -> u8 {
-        0
     }
 }
 
@@ -67,7 +58,7 @@ fn main() {
     my_dwarf.constitution_bonus();
 
     // Return 1
-    dbg!(my_half_orc.constitution_bonus());
+    dbg!(my_human.constitution_bonus());
 
     // Return 0
     dbg!(my_elf.constitution_bonus());
