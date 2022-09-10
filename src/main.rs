@@ -1,4 +1,3 @@
-
 pub fn hypot<T>(a: T, b: T) -> f64
 where
     T: core::ops::Mul<T, Output = T>
