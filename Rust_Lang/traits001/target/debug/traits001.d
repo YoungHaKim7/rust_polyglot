@@ -1,0 +1,1 @@
+/Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/Rust_Lang/traits001/target/debug/traits001: /Users/globalyoung/Documents/Project/Github/rust_project/rust_polyglot/Rust_Lang/traits001/src/main.rs
