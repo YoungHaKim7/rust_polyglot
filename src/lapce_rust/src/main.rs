@@ -58,9 +58,9 @@ fn main() {
     my_dwarf.constitution_bonus();
 
     // Return 1
-    dbg!(my_human.constitution_bonus());
+    my_human.constitution_bonus();
 
     // Return 0
-    dbg!(my_elf.constitution_bonus());
+    my_elf.constitution_bonus();
     my_human.constitution_bonus();
 }
